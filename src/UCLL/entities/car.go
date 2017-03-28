@@ -6,18 +6,67 @@ import (
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	"strconv"
 	"strings"
+	"time"
 )
+
+type Part struct {
+	Name          string
+	Description   string
+	LocationOnCar string
+	DateAdded     time.Time
+	DateInspected time.Time
+	Brand         string
+}
+
+type Specific struct {
+	Name        string
+	Description string
+	Value       string
+	Timestamp   time.Time
+}
+type SpecificsArray []Specific
+
+type PartsArray []Part
 
 //Car entity
 type Car struct {
-	CarID  string
-	Brand  string
-	Type   string
-	Engine string
-	Year   int
+	CarID     string
+	Brand     string
+	Type      string
+	Engine    string
+	Year      int
+	Parts     PartsArray
+	Specifics SpecificsArray
 }
 
 type Cars []Car
+
+func (s SpecificsArray) sampleSpecifics() {
+
+	s = make([]Specific, 0, 5)
+
+	s[0].Name = "Color"
+	s[0].Description = "First Specific in the list."
+	s[0].Value = "Red"
+	s[0].Timestamp = time.Now()
+
+	s[1].Name = "Power"
+	s[1].Description = "Horse power!"
+	s[1].Value = "144 HP"
+	s[1].Timestamp = time.Now()
+
+}
+
+func (p PartsArray) sampleParts() {
+	p = make([]Part, 0, 5)
+	p[0].Brand = "Mercedes"
+	p[0].DateAdded = time.Date(2010, time.January, 1, 0, 0, 0, 0, nil)
+	p[0].DateInspected = time.Now()
+	p[0].Description = "Left mirror"
+	p[0].LocationOnCar = "Outside, left"
+	p[0].Name = "Mirror"
+
+}
 
 //Insert an new car in the database + update index (CarId Separated by ,)
 func (c *Car) CreateCar(stub shim.ChaincodeStubInterface, args []string) error {
@@ -98,3 +147,4 @@ func (cs *Cars) LoadSample(stub shim.ChaincodeStubInterface) string {
 	}
 	return "Load Car samples: 6 inserted"
 }
+
