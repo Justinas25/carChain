@@ -33,7 +33,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Name:", r.Form["name"])
 		fmt.Println("Surname:", r.Form["surname"])
 		fmt.Println("Birth of day:", r.Form["birth"])
-		fmt.Println("Nationality:", r.Form["nationality"])
+		fmt.Println("Your nationality:", r.Form["nationality"])
 	}
 }
 
