@@ -82,9 +82,21 @@
   </form>
 
   <button onclick="send()">Try ajax</button>
+  <div class="target"></div>
 
   <script type="text/javascript">
     function send() {
+
+      var info = {
+          type:'t1',
+          chaincodeID: [ 
+                {path: 'UCLL'}
+          ],
+          ctorMsg: {
+            {function: 'init',
+              args: ''}
+          }
+      };
 
       $('#target').html('sending..');
 
@@ -94,7 +106,8 @@
             dataType: 'json',
             success: function (data) {
                 $('#target').html(data.msg);
-            }
+            },
+            data: info
         });
     }
 </script>
