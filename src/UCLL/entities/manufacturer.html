@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Owner</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <style type="text/css">
+    .entry:not(:first-of-type)
+    {
+        margin-top: 10px;
+    }
+
+    .glyphicon
+    {
+        font-size: 12px;
+    }
+  </style>
+
+</head>
+<body>
+
+<div class="container">
+  <h2>New car</h2>
+  <form action="/" method="POST">
+    <div class="form-group">
+      <label for="carID">Car ID:</label>
+      <input class="form-control" id="carID" name="carID" placeholder="Enter car ID">
+    </div>
+    <div class="form-group">
+      <label for="brand">Brand:</label>
+      <input class="form-control" id="brand" name="brand" placeholder="Enter brand">
+    </div>
+    <div class="form-group">
+      <label for="type">Type:</label>
+      <input class="form-control" id="type" name="type" placeholder="Enter type">
+    </div>
+     <div class="form-group">
+      <label for="collected">Collected:</label>
+      <input type="date" class="form-control" id="collected" name="collected" placeholder="Enter date when car was collected">
+    </div>
+
+
+  <div class="panel panel-default">
+    <div class="panel-heading">Cars parts</div>
+      <div class="panel-body">
+        <div class="container">
+          <div class="row">
+                <div class="control-group" id="fields">
+                    <div class="controls "> 
+                        <div>
+                          <div class=" entry">
+                            <div class="col-sm-3">
+                                <input class="form-control" name="types[]" type="text" placeholder="Type" />                
+                            </div>
+                            <div class="input-group col-sm-3">
+                                <input class="form-control" name="names[]" type="text" placeholder="Name" />
+                              <span class="input-group-btn">
+                                    <button class="btn btn-success btn-add" type="button">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+                            </div>
+                        </div>
+                    <br>
+                    <small>Press <span class="glyphicon glyphicon-plus gs"></span> to add another car part</small>
+                    </div>
+                </div>
+          </div>
+        </div>
+     </div>   
+  </div>
+
+
+
+  <div class="clear"></div>
+      <button type="submit" class="btn btn-default">Save</button>
+  </form>
+
+  <button onclick="send()">Try ajax</button>
+
+  <script type="text/javascript">
+    function send() {
+
+      $('#target').html('sending..');
+
+        $.ajax({
+            url: '/test',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                $('#target').html(data.msg);
+            }
+        });
+    }
+</script>
+
+  <script>
+$(function()
+{
+    $(document).on('click', '.btn-add', function(e)
+    {
+        e.preventDefault();
+
+        var controlForm = $('.controls div:first'),
+            currentEntry = $(this).parents('.entry:last');
+            newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+        newEntry.find('input').val('');
+        controlForm.find('.entry:not(:last) .btn-add')
+            .removeClass('btn-add').addClass('btn-remove')
+            .removeClass('btn-success').addClass('btn-danger')
+            .html('<span class="glyphicon glyphicon-minus"></span>');
+    }).on('click', '.btn-remove', function(e)
+    {
+    $(this).parents('.entry:first').remove();
+
+    e.preventDefault();
+    return false;
+  });
+});
+
+  </script>
+
+
+
+
+</body>
+</html>
