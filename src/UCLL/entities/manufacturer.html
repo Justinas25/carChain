@@ -85,10 +85,24 @@
   <div class="target"></div>
 
   <script type="text/javascript">
+
+  function send2() {
+
+    $.ajax({
+            url: 'http://172.',
+            type: 'post',
+            dataType: 'json',
+            data: '{"jsonrpc": "2.0","method": "deploy","params": {"type": 1,"chaincodeID":{"path":"UCLL"},"ctorMsg": {"function":"init","args":[]}},"id": 0}function":"init","args":[]}},"id": 1}',
+            success: function (data) {
+                $('#target').html(data.msg);
+            }
+        });
+  }
+
     function send() {
 
       var info = {
-          type:'t1',
+          type:'1',
           chaincodeID: [ 
                 {path: 'UCLL'}
           ],
@@ -101,13 +115,14 @@
       $('#target').html('sending..');
 
         $.ajax({
-            url: '/test',
+            url: 'http://172.',
             type: 'post',
             dataType: 'json',
+            data: info,
+            id = 1,
             success: function (data) {
                 $('#target').html(data.msg);
-            },
-            data: info
+            }
         });
     }
 </script>
